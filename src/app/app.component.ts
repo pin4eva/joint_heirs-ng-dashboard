@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class AppComponent {
   title = 'ng-dashboard';
 
-  constructor() {
-    console.log(environment?.['API_URL' as keyof {}]);
+  constructor(private readonly authService: AuthService) {
+    this.authService.getUsers();
   }
 }
