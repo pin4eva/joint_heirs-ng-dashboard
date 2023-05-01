@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { User } from '../model/user.model';
 import { LoginInput } from '../model/auth.model';
-
+import { catchError, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,6 +18,6 @@ export class AuthService {
   }
 
   login(input: LoginInput) {
-    return this.http.post<string>(this.API_URL + '/auth/login', input);
+    return this.http.post<{ token: string }>(this.API_URL + '/auth/login', input);
   }
 }

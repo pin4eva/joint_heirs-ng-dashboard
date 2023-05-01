@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { LoginInput } from 'src/app/model/auth.model';
 import { AuthService } from 'src/app/services/auth.service';
+import 'rxjs/operators';
 
 @Component({
   selector: 'login-page',
@@ -21,13 +22,12 @@ export class LoginComponent {
       this.loading = true;
       this.authService.login(this.input).subscribe({
         next: (data) => {
-          console.log(data);
+          localStorage.setItem('token', data.token);
+          // sessionStorage.setItem('token', data.token);
+          form.reset();
         },
-        error: (error) => {
-          this.errorMessage = error?.error?.message;
-        },
-        complete: () => {
-          this.loading = false;
+        error: (err: HttpErrorResponse) => {
+          this.errorMessage = err.error.message;
         },
       });
     } catch (error) {
